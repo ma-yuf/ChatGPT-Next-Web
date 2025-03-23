@@ -2,17 +2,17 @@ import fetch from "node-fetch";
 import fs from "fs/promises";
 
 const RAW_FILE_URL = "https://raw.githubusercontent.com/";
-const MIRRORF_FILE_URL = "http://raw.fgit.ml/";
+const MIRRORF_FILE_URL = "https://ghproxy.net/";
 
 const RAW_CN_URL = "PlexPt/awesome-chatgpt-prompts-zh/main/prompts-zh.json";
-const CN_URL = MIRRORF_FILE_URL + RAW_CN_URL;
+const CN_URL = MIRRORF_FILE_URL + RAW_FILE_URL + RAW_CN_URL;
 const RAW_TW_URL = "PlexPt/awesome-chatgpt-prompts-zh/main/prompts-zh-TW.json";
-const TW_URL = MIRRORF_FILE_URL + RAW_TW_URL;
+const TW_URL = MIRRORF_FILE_URL + RAW_FILE_URL + RAW_TW_URL;
 const RAW_EN_URL = "f/awesome-chatgpt-prompts/main/prompts.csv";
-const EN_URL = MIRRORF_FILE_URL + RAW_EN_URL;
+const EN_URL = MIRRORF_FILE_URL + RAW_FILE_URL + RAW_EN_URL;
 const FILE = "./public/prompts.json";
 
-const ignoreWords = ["涩涩", "魅魔", "澀澀"];
+const ignoreWords = [];
 
 const timeoutPromise = (timeout) => {
   return new Promise((resolve, reject) => {
