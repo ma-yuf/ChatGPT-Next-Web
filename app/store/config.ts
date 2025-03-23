@@ -85,7 +85,11 @@ export const DEFAULT_CONFIG = {
 
   ttsConfig: {
     enable: true,
+    autoplay: false,
     engine: "Edge-TTS",
+    model: DEFAULT_TTS_MODEL,
+    voice: DEFAULT_TTS_VOICE,
+    speed: 1.0,
   },
 
   realtimeConfig: {
