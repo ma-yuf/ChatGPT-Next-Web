@@ -68,7 +68,7 @@ export const DEFAULT_CONFIG = {
     providerName: "OpenRouter" as ServiceProvider,
     temperature: 0.5,
     top_p: 1,
-    max_tokens: 512000,
+    max_tokens: 5120,
     presence_penalty: 0,
     frequency_penalty: 0,
     sendMemory: true,
