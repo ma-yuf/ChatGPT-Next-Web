@@ -57,7 +57,7 @@ export const DEFAULT_CONFIG = {
 
   disablePromptHint: false,
 
-  dontShowMaskSplashScreen: false, // dont show splash screen when create chat
+  dontShowMaskSplashScreen: true, // dont show splash screen when create chat
   hideBuiltinMasks: false, // dont add builtin masks
 
   customModels: "",
@@ -65,17 +65,17 @@ export const DEFAULT_CONFIG = {
 
   modelConfig: {
     model: "gpt-4o-mini" as ModelType,
-    providerName: "OpenAI" as ServiceProvider,
+    providerName: "OpenRouter" as ServiceProvider,
     temperature: 0.5,
     top_p: 1,
-    max_tokens: 4000,
+    max_tokens: 512000,
     presence_penalty: 0,
     frequency_penalty: 0,
     sendMemory: true,
-    historyMessageCount: 4,
+    historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
-    compressModel: "",
-    compressProviderName: "",
+    compressModel: "deepseek/deepseek-chat:free" as ModelType,
+    compressProviderName: "OpenRouter" as ServiceProvider,
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
     size: "1024x1024" as ModelSize,
@@ -84,12 +84,8 @@ export const DEFAULT_CONFIG = {
   },
 
   ttsConfig: {
-    enable: false,
-    autoplay: false,
-    engine: DEFAULT_TTS_ENGINE,
-    model: DEFAULT_TTS_MODEL,
-    voice: DEFAULT_TTS_VOICE,
-    speed: 1.0,
+    enable: true,
+    engine: "Edge-TTS",
   },
 
   realtimeConfig: {
