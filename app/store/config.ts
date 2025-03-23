@@ -75,7 +75,7 @@ export const DEFAULT_CONFIG = {
     historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
     compressModel: "deepseek/deepseek-chat:free" as ModelType,
-    compressProviderName: "OpenRouter" as ServiceProvider,
+    compressProviderName: "OpenRouter",
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
     size: "1024x1024" as ModelSize,
