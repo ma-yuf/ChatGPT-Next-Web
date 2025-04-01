@@ -6,7 +6,7 @@
     },
     "servers": [
       {
-        "url": "https://baresearch.org",
+        "url": "https://etsi.me",
         "description": "SearXNG instance URL."
       }
     ],
