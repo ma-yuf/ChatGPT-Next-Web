@@ -659,7 +659,7 @@ export const useChatStore = createPersistStore(
       },
 
       summarizeSession(
-        refreshTitle: boolean = true,
+        refreshTitle: boolean = false,
         targetSession: ChatSession,
       ) {
         const config = useAppConfig.getState();
@@ -682,12 +682,9 @@ export const useChatStore = createPersistStore(
         // remove error messages if any
         const messages = session.messages;
 
-        // should summarize topic after chating more than 50 words
-        const SUMMARIZE_MIN_LEN = 50;
         if (
           (config.enableAutoGenerateTitle &&
-            session.topic === DEFAULT_TOPIC &&
-            countMessages(messages) >= SUMMARIZE_MIN_LEN) ||
+            session.topic === DEFAULT_TOPIC) ||
           refreshTitle
         ) {
           const startIndex = Math.max(
