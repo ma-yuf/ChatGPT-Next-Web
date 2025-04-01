@@ -74,7 +74,7 @@ export const DEFAULT_CONFIG = {
     sendMemory: true,
     historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
-    compressModel: "deepseek/deepseek-chat-v3-0324:free" as ModelType,
+    compressModel: "google/gemini-2.0-flash-exp:free" as ModelType,
     compressProviderName: "OpenRouter",
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
