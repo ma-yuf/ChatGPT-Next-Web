@@ -659,7 +659,7 @@ export const useChatStore = createPersistStore(
       },
 
       summarizeSession(
-        refreshTitle: boolean = false,
+        refreshTitle: boolean = true,
         targetSession: ChatSession,
       ) {
         const config = useAppConfig.getState();
@@ -701,8 +701,13 @@ export const useChatStore = createPersistStore(
             )
             .concat(
               createMessage({
-                role: "user",
-                content: Locale.Store.Prompt.Topic,
+                role: "system",
+                content: "Create a concise, 3-5 word title with an emoji as a title for the prompt in the given language. Suitable Emojis for the summary can be used to enhance understanding but avoid quotation marks or special formatting. RESPOND ONLY WITH THE TITLE TEXT.\
+Examples of titles:\
+📉 Stock Market Trends\
+🍪 Perfect Chocolate Chip Recipe\
+🎵 Evolution of Music Streaming\
+🎮 Video Game Development Insights",
               }),
             );
           api.llm.chat({
