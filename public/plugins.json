@@ -10,8 +10,8 @@
     "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/arxivsearch/openapi.json"
   },
   {
-    "id": "duckduckgolite",
-    "name": "DuckDuckGoLiteSearch",
-    "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/duckduckgolite/openapi.json"
+    "id": "searxng",
+    "name": "SearXNG Search",
+    "schema": "https://chat.mayuf.top/searxng.json"
   }
 ]
