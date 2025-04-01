@@ -35,7 +35,6 @@ import { isMcpEnabled } from "../mcp/actions";
 
 const DISCOVERY = [
   { name: Locale.Plugin.Name, path: Path.Plugins },
-  { name: "Stable Diffusion", path: Path.Sd },
   { name: Locale.SearchChat.Page.Title, path: Path.SearchChat },
 ];
 
@@ -335,15 +334,6 @@ export function SideBar(props: { className?: string }) {
                   shadow
                 />
               </Link>
-            </div>
-            <div className={styles["sidebar-action"]}>
-              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
-                <IconButton
-                  aria={Locale.Export.MessageFromChatGPT}
-                  icon={<GithubIcon />}
-                  shadow
-                />
-              </a>
             </div>
           </>
         }

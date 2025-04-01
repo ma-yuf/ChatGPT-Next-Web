@@ -347,6 +347,9 @@ export function showPlugins(provider: ServiceProvider, model: string) {
   if (provider == ServiceProvider.Google && !model.includes("vision")) {
     return true;
   }
+  if (provider == ServiceProvider.OpenRouter && (model.includes("gemini") || model.includes("qwen"))) {
+    return true;
+  }
   return false;
 }
 

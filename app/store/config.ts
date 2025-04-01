@@ -64,7 +64,7 @@ export const DEFAULT_CONFIG = {
   models: DEFAULT_MODELS as any as LLMModel[],
 
   modelConfig: {
-    model: "gpt-4o-mini" as ModelType,
+    model: "deepseek/deepseek-chat-v3-0324:free" as ModelType,
     providerName: "OpenRouter" as ServiceProvider,
     temperature: 0.5,
     top_p: 1,
@@ -74,7 +74,7 @@ export const DEFAULT_CONFIG = {
     sendMemory: true,
     historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
-    compressModel: "deepseek/deepseek-chat:free" as ModelType,
+    compressModel: "deepseek/deepseek-chat-v3-0324:free" as ModelType,
     compressProviderName: "OpenRouter",
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
