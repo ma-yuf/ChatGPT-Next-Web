@@ -8,5 +8,10 @@
     "id": "searxng",
     "name": "SearXNG Search",
     "schema": "https://chat.mayuf.top/searxng.json"
+  },
+  {
+    "id": "jina-r",
+    "name": "Jina URL Content Reader",
+    "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/jina-r/openapi.json"
   }
 ]
