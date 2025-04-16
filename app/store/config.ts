@@ -64,8 +64,8 @@ export const DEFAULT_CONFIG = {
   models: DEFAULT_MODELS as any as LLMModel[],
 
   modelConfig: {
-    model: "deepseek/deepseek-chat-v3-0324:free" as ModelType,
-    providerName: "OpenRouter" as ServiceProvider,
+    model: "o3-mini" as ModelType,
+    providerName: "OpenAI" as ServiceProvider,
     temperature: 0.5,
     top_p: 1,
     max_tokens: 5120,
@@ -74,8 +74,8 @@ export const DEFAULT_CONFIG = {
     sendMemory: true,
     historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
-    compressModel: "google/gemini-2.0-flash-exp:free" as ModelType,
-    compressProviderName: "OpenRouter",
+    compressModel: "gpt-4o-mini-2024-07-18" as ModelType,
+    compressProviderName: "OpenAI",
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
     size: "1024x1024" as ModelSize,
