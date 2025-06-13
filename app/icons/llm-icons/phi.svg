@@ -1,0 +1,14 @@
+<svg fill="#333" fill-rule="evenodd" height="1em" style="flex:none;line-height:1" viewBox="0 0 30 30"
+     width="1em" xmlns="http://www.w3.org/2000/svg">
+    <title>Phi</title>
+        <g>
+            <rect width="30" height="30" fill="#00a3ef" rx="6"/>
+            <rect x="16" y="16" width="10" height="10" fill="#FFFFFF"/>
+            <rect x="4" y="16" width="10" height="10" fill="#FFFFFF"/>
+            <rect x="16" y="4" width="10" height="10" fill="#FFFFFF"/>
+            <rect x="4" y="4" width="10" height="10" fill="#FFFFFF"/>
+        </g>
+</svg>
+
+
+
