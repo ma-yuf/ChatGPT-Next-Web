@@ -1,17 +1,17 @@
 [
   {
-    "id": "arxivsearch",
-    "name": "ArxivSearch",
-    "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/arxivsearch/openapi.json"
-  },
-  {
-    "id": "searxng",
-    "name": "SearXNG Search",
-    "schema": "https://chat.mayuf.top/searxng.json"
+    "id": "Tavily",
+    "name": "Web Search",
+    "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/refs/heads/main/plugins/tavilysearch/openapi.json"
   },
   {
     "id": "jina-r",
-    "name": "Jina URL Content Reader",
+    "name": "URL Content Reader",
     "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/jina-r/openapi.json"
+  },
+  {
+    "id": "arxivsearch",
+    "name": "ArxivSearch",
+    "schema": "https://ghproxy.net/https://raw.githubusercontent.com/ChatGPTNextWeb/NextChat-Awesome-Plugins/main/plugins/arxivsearch/openapi.json"
   }
 ]

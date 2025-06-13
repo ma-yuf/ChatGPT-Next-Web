@@ -33,8 +33,8 @@ export async function handle(
       return true;
     }),
   );
+  const baseUrl = req.headers.get("x-base-url");
   // if dalle3 use openai api key
-    const baseUrl = req.headers.get("x-base-url");
     if (baseUrl?.includes("api.openai.com")) {
       if (!serverConfig.apiKey) {
         return NextResponse.json(
@@ -44,7 +44,16 @@ export async function handle(
       }
       headers.set("Authorization", `Bearer ${serverConfig.apiKey}`);
     }
-
+  // if Tavily
+    if (baseUrl?.includes("api.tavily.com")) {
+      if (!serverConfig.tavilyApiKey) {
+        return NextResponse.json(
+          { error: "Tavily API key not configured" },
+          { status: 500 },
+        );
+      }
+      headers.set("Authorization", `Bearer ${serverConfig.tavilyApiKey}`);
+    }
   const controller = new AbortController();
   const fetchOptions: RequestInit = {
     headers,

@@ -423,7 +423,7 @@ export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
 export const DEEPSEEK_SUMMARIZE_MODEL = "deepseek-chat";
 
 export const KnowledgeCutOffDate: Record<string, string> = {
-  default: "2023-10",
+  default: "2024-07",
   "gpt-4-turbo": "2023-12",
   "gpt-4-turbo-2024-04-09": "2023-12",
   "gpt-4-turbo-preview": "2023-12",
@@ -440,9 +440,6 @@ export const KnowledgeCutOffDate: Record<string, string> = {
   "o1-preview-2024-09-12": "2023-10",
   "o1-preview": "2023-10",
   "o1-2024-12-17": "2023-10",
-  o1: "2023-10",
-  "o3-mini-2025-01-31": "2023-10",
-  "o3-mini": "2023-10",
   // After improvements,
   // it's now easier to add "KnowledgeCutOffDate" instead of stupid hardcoding it, as was done previously.
   "gemini-pro": "2023-12",
@@ -506,11 +503,10 @@ const openaiModels = [
   "gpt-4-turbo-2024-04-09",
   "gpt-4-1106-preview",
   "dall-e-3",
-  "o1-mini",
-  "o1-preview",
-  "o1",
-  "o1-pro",
-  "o3-mini",
+  "gpt-4.1",
+  "gpt-4.1-mini",
+  "o3",
+  "o4-mini",
 ];
 
 const googleModels = [

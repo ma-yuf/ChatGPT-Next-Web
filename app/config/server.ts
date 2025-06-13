@@ -92,6 +92,8 @@ declare global {
       OPENROUTER_URL?: string;
       OPENROUTER_API_KEY?: string;
 
+      TAVILY_API_KEY?: string;
+
       // custom template for preprocessing user input
       DEFAULT_INPUT_TEMPLATE?: string;
 
@@ -168,6 +170,7 @@ export const getServerSideConfig = () => {
   const isChatGLM = !!process.env.CHATGLM_API_KEY;
   const isSiliconFlow = !!process.env.SILICONFLOW_API_KEY;
   const isOpenRouter = !!process.env.OPENROUTER_API_KEY;
+  const isTavily = !!process.env.TAVILY_API_KEY;
   // const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
   // const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
   // const randomIndex = Math.floor(Math.random() * apiKeys.length);
@@ -254,6 +257,9 @@ export const getServerSideConfig = () => {
     isOpenRouter,
     openrouterUrl: process.env.OPENROUTER_URL,
     openrouterApiKey: getApiKey(process.env.OPENROUTER_API_KEY),
+
+    isTavily,
+    tavilyApiKey: getApiKey(process.env.TAVILY_API_KEY),
 
     gtmId: process.env.GTM_ID,
     gaId: process.env.GA_ID || DEFAULT_GA_ID,
