@@ -3,12 +3,12 @@ import { SubmitKey } from "../store/config";
 const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
-    Unauthorized: `请点击[这里](/#/auth)输入访问秘钥 🔑`,
+    Unauthorized: `请点击[这里](/#/auth)输入访问密码 🔑`,
   },
   Auth: {
     Return: "返回",
     Title: "需要密码",
-    Tips: "管理员开启了密码验证，请在下方填入访问码",
+    Tips: "管理员开启了密码验证, 请在下方填入访问码",
     Input: "在此处填写访问码",
     Confirm: "确认",
     Later: "稍后再说",
@@ -69,9 +69,9 @@ const cn = {
     Input: (submitKey: string) => {
       var inputHints = `${submitKey} 发送`;
       if (submitKey === String(SubmitKey.Enter)) {
-        inputHints += "，Shift + Enter 换行";
+        inputHints += ", Shift + Enter 换行";
       }
-      return inputHints + "，/ 触发补全，: 触发命令";
+      return inputHints + ", / 触发补全, : 触发命令";
     },
     Send: "发送",
     StartSpeak: "说话",
@@ -127,7 +127,7 @@ const cn = {
   },
   Memory: {
     Title: "历史摘要",
-    EmptyContent: "对话内容过短，无需总结",
+    EmptyContent: "对话内容过短, 无需总结",
     Send: "自动压缩聊天记录并作为上下文发送",
     Copy: "复制摘要",
     Reset: "[unused]",
@@ -159,7 +159,7 @@ const cn = {
       },
     },
     Lang: {
-      Name: "Language", // 注意：如果要添加新的翻译，请不要翻译此值，将它保留为 `Language`
+      Name: "Language", // 注意：如果要添加新的翻译, 请不要翻译此值, 将它保留为 `Language`
       All: "所有语言",
     },
     Avatar: "头像",
@@ -169,7 +169,7 @@ const cn = {
     },
     FontFamily: {
       Title: "聊天字体",
-      SubTitle: "聊天内容的字体，若置空则应用全局默认字体",
+      SubTitle: "聊天内容的字体, 若置空则应用全局默认字体",
       Placeholder: "字体名称",
     },
     InjectSystemPrompts: {
@@ -205,7 +205,7 @@ const cn = {
     Mask: {
       Splash: {
         Title: "面具启动页",
-        SubTitle: "新建聊天时，展示面具启动页",
+        SubTitle: "新建聊天时, 展示面具启动页",
       },
       Builtin: {
         Title: "隐藏内置面具",
@@ -219,7 +219,7 @@ const cn = {
       },
       List: "自定义提示词列表",
       ListCount: (builtin: number, custom: number) =>
-        `内置 ${builtin} 条，用户定义 ${custom} 条`,
+        `内置 ${builtin} 条, 用户定义 ${custom} 条`,
       Edit: "编辑",
       Modal: {
         Title: "提示词列表",
@@ -236,153 +236,50 @@ const cn = {
     },
     CompressThreshold: {
       Title: "历史消息长度压缩阈值",
-      SubTitle: "当未压缩的历史消息超过该值时，将进行压缩",
+      SubTitle: "当未压缩的历史消息超过该值时, 将进行压缩",
     },
 
-    Access: {
-      AccessCode: {
-        Title: "访问密码",
-        SubTitle: "管理员已开启加密访问",
-        Placeholder: "请输入访问密码",
-      },
-      CustomEndpoint: {
-        Title: "自定义接口",
-        SubTitle: "是否使用自定义 Azure 或 OpenAI 服务",
-      },
-      Provider: {
-        Title: "模型服务商",
-        SubTitle: "切换不同的服务商",
-      },
-      OpenAI: {
-        ApiKey: {
-          Title: "API Key",
-          SubTitle: "使用自定义 OpenAI Key 绕过密码访问限制",
-          Placeholder: "OpenAI API Key",
-        },
-
-        Endpoint: {
-          Title: "接口地址",
-          SubTitle: "除默认地址外，必须包含 http(s)://",
-        },
-      },
-      Anthropic: {
-        ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义 Anthropic Key 绕过密码访问限制",
-          Placeholder: "Anthropic API Key",
-        },
-
-        Endpoint: {
-          Title: "接口地址",
-          SubTitle: "样例：",
-        },
-
-        ApiVerion: {
-          Title: "接口版本 (claude api version)",
-          SubTitle: "选择一个特定的 API 版本输入",
-        },
-      },
-      Google: {
-        ApiKey: {
-          Title: "API 密钥",
-          SubTitle: "从 Google AI 获取您的 API 密钥",
-          Placeholder: "Google AI API KEY",
-        },
-
-        Endpoint: {
-          Title: "终端地址",
-          SubTitle: "示例：",
-        },
-
-        ApiVersion: {
-          Title: "API 版本（仅适用于 gemini-pro）",
-          SubTitle: "选择一个特定的 API 版本",
-        },
-        GoogleSafetySettings: {
-          Title: "Google 安全过滤级别",
-          SubTitle: "设置内容过滤级别",
-        },
-      },
-      DeepSeek: {
-        ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义DeepSeek API Key",
-          Placeholder: "DeepSeek API Key",
-        },
-        Endpoint: {
-          Title: "接口地址",
-          SubTitle: "样例：",
-        },
-      },
-      XAI: {
-        ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义XAI API Key",
-          Placeholder: "XAI API Key",
-        },
-        Endpoint: {
-          Title: "接口地址",
-          SubTitle: "样例：",
-        },
-      },
-      OpenRouter: {
-        ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义OpenRouter API Key",
-          Placeholder: "OpenRouter API Key",
-        },
-        Endpoint: {
-          Title: "接口地址",
-          SubTitle: "样例：",
-        },
-      },
-      CustomModel: {
-        Title: "自定义模型名",
-        SubTitle: "增加自定义模型可选项，使用英文逗号隔开",
-      },
-    },
-
-    Model: "模型 (model)",
+    Model: "模型",
     CompressModel: {
       Title: "对话摘要模型",
       SubTitle: "用于压缩历史记录、生成对话标题的模型",
     },
     Temperature: {
-      Title: "随机性 (temperature)",
-      SubTitle: "值越大，回复越随机",
+      Title: "temperature",
+      SubTitle: "值越大, 回复内容越赋有多样性、创造性、随机性; 设为 0 根据事实回答; 日常聊天建议0.7",
     },
     TopP: {
-      Title: "核采样 (top_p)",
-      SubTitle: "与随机性类似，但不要和随机性一起更改",
+      Title: "top_p",
+      SubTitle: "默认为 1; 另一种控制随机度的手段；越接近 1, 结果越多样, 不要和随机性一起更改",
     },
     MaxTokens: {
-      Title: "单次回复限制 (max_tokens)",
-      SubTitle: "单次交互所用的最大 Token 数",
+      Title: "max_tokens",
+      SubTitle: "最大返回 token 数, 上限由模型版本决定",
     },
     PresencePenalty: {
-      Title: "话题新鲜度 (presence_penalty)",
-      SubTitle: "值越大，越有可能扩展到新话题",
+      Title: "presence_penalty",
+      SubTitle: "默认为 0; 对“是否出现过”进行惩罚, 正值会减少整段中首次出现的重复",
     },
     FrequencyPenalty: {
-      Title: "频率惩罚度 (frequency_penalty)",
-      SubTitle: "值越大，越有可能降低重复字词",
+      Title: "frequency_penalty",
+      SubTitle: "默认为 0; 对“出现次数”进行惩罚, 正值可抑制重复字词",
     },
   },
   Store: {
     DefaultTopic: "新的聊天",
     BotHello: "有什么可以帮你的吗",
-    Error: "出错了，稍后重试吧",
+    Error: "出错了, 稍后重试吧",
     Prompt: {
       History: (content: string) => "这是历史聊天总结作为前情提要：" + content,
       Topic:
-        "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”",
+        "使用四到五个字直接返回这句话的简要主题, 不要解释、不要标点、不要语气词、不要多余文本, 不要加粗, 如果没有主题, 请直接返回“闲聊”",
       Summarize:
-        "简要总结一下对话内容，用作后续的上下文提示 prompt，控制在 200 字以内",
+        "简要总结一下对话内容, 用作后续的上下文提示 prompt, 控制在 200 字以内",
     },
   },
   Copy: {
     Success: "已写入剪贴板",
-    Failed: "复制失败，请赋予剪贴板权限",
+    Failed: "复制失败, 请赋予剪贴板权限",
   },
   Download: {
     Success: "内容已下载到您的目录。",
@@ -423,7 +320,7 @@ const cn = {
       SubTitle: (count: number) => `${count} 个插件`,
       Search: "搜索插件",
       Create: "新建",
-      Find: "您可以在Github上找到优秀的插件：",
+      Find: "您可以在Github上找到优秀的插件: ",
     },
     Item: {
       Info: (count: number) => `${count} 方法`,
@@ -484,7 +381,7 @@ const cn = {
       Sync: {
         Title: "使用全局设置",
         SubTitle: "当前对话是否使用全局模型设置",
-        Confirm: "当前对话的自定义设置将会被自动覆盖，确认启用全局设置？",
+        Confirm: "当前对话的自定义设置将会被自动覆盖, 确认启用全局设置？",
       },
       HideContext: {
         Title: "隐藏预设对话",
@@ -511,13 +408,13 @@ const cn = {
     NotShow: "不再展示",
     ConfirmNoShow: "确认禁用？禁用后可以随时在设置中重新启用。",
     Title: "挑选一个面具",
-    SubTitle: "现在开始，与面具背后的灵魂思维碰撞",
+    SubTitle: "现在开始, 与面具背后的灵魂思维碰撞",
     More: "查看全部",
   },
 
   URLCommand: {
-    Code: "检测到链接中已经包含访问码，是否自动填入？",
-    Settings: "检测到链接中包含了预制设置，是否自动填入？",
+    Code: "检测到链接中已经包含访问码, 是否自动填入？",
+    Settings: "检测到链接中包含了预制设置, 是否自动填入？",
   },
 
   UI: {

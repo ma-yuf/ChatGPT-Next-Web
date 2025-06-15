@@ -32,9 +32,6 @@ import CloseIcon from "../icons/close.svg";
 import CancelIcon from "../icons/cancel.svg";
 import ImageIcon from "../icons/image.svg";
 
-import LightIcon from "../icons/light.svg";
-import DarkIcon from "../icons/dark.svg";
-import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
 import RobotIcon from "../icons/robot.svg";
@@ -586,21 +583,6 @@ export function ChatActions(props: {
             icon={props.uploading ? <LoadingButtonIcon /> : <ImageIcon />}
           />
         )}
-        <ChatAction
-          onClick={nextTheme}
-          text={Locale.Chat.InputActions.Theme[theme]}
-          icon={
-            <>
-              {theme === Theme.Auto ? (
-                <AutoIcon />
-              ) : theme === Theme.Light ? (
-                <LightIcon />
-              ) : theme === Theme.Dark ? (
-                <DarkIcon />
-              ) : null}
-            </>
-          }
-        />
 
         <ChatAction
           onClick={props.showPromptHints}
@@ -1396,8 +1378,8 @@ function ChatComponent() {
             );
             const imagesLength = images.length;
 
-            if (imagesLength > 3) {
-              images.splice(3, imagesLength - 3);
+            if (imagesLength > 5) {
+              images.splice(5, imagesLength - 5);
             }
             setAttachImages(images);
           }
@@ -1416,7 +1398,7 @@ function ChatComponent() {
         const fileInput = document.createElement("input");
         fileInput.type = "file";
         fileInput.accept =
-          "image/png, image/jpeg, image/webp, image/heic, image/heif";
+          "image/png,image/jpeg,image/webp,image/heic,image/heif,.png,.jpg,.jpeg,.webp,.heic,.heif,image/*";
         fileInput.multiple = true;
         fileInput.onchange = (event: any) => {
           setUploading(true);
@@ -1428,7 +1410,7 @@ function ChatComponent() {
               .then((dataUrl) => {
                 imagesData.push(dataUrl);
                 if (
-                  imagesData.length === 3 ||
+                  imagesData.length === 5 ||
                   imagesData.length === files.length
                 ) {
                   setUploading(false);
@@ -1446,8 +1428,8 @@ function ChatComponent() {
     );
 
     const imagesLength = images.length;
-    if (imagesLength > 3) {
-      images.splice(3, imagesLength - 3);
+    if (imagesLength > 5) {
+      images.splice(5, imagesLength - 5);
     }
     setAttachImages(images);
   }
