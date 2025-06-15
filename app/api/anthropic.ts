@@ -10,7 +10,6 @@ import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./auth";
 import { isModelNotavailableInServer } from "@/app/utils/model";
-import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 
 const ALLOWD_PATH = new Set([Anthropic.ChatPath, Anthropic.ChatPath1]);
 
@@ -91,7 +90,7 @@ async function request(req: NextRequest) {
   );
 
   // try rebuild url, when using cloudflare ai gateway in server
-  const fetchUrl = cloudflareAIGatewayUrl(`${baseUrl}${path}`);
+  const fetchUrl = `${baseUrl}${path}`;
 
   const fetchOptions: RequestInit = {
     headers: {

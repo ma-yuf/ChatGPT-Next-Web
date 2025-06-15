@@ -1,5 +1,5 @@
 import { Anthropic, ApiPath } from "@/app/constant";
-import { ChatOptions, getHeaders, LLMApi, SpeechOptions } from "../api";
+import { ChatOptions, getHeaders, LLMApi } from "../api";
 import {
   useAccessStore,
   useAppConfig,
@@ -7,11 +7,8 @@ import {
   usePluginStore,
   ChatMessageTool,
 } from "@/app/store";
-import { getClientConfig } from "@/app/config/client";
-import { ANTHROPIC_BASE_URL } from "@/app/constant";
 import { getMessageTextContent, isVisionModel } from "@/app/utils";
 import { preProcessImageContent, stream } from "@/app/utils/chat";
-import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 import { RequestPayload } from "./openai";
 import { fetch } from "@/app/utils/stream";
 
@@ -74,9 +71,6 @@ const ClaudeMapper = {
 const keys = ["claude-2, claude-instant-1"];
 
 export class ClaudeApi implements LLMApi {
-  speech(options: SpeechOptions): Promise<ArrayBuffer> {
-    throw new Error("Method not implemented.");
-  }
 
   extractMessage(res: any) {
     console.log("[Response] claude response: ", res);
@@ -331,12 +325,6 @@ export class ClaudeApi implements LLMApi {
       }
     }
   }
-  async usage() {
-    return {
-      used: 0,
-      total: 0,
-    };
-  }
   async models() {
     // const provider = {
     //   id: "anthropic",
@@ -388,9 +376,7 @@ export class ClaudeApi implements LLMApi {
 
     // if endpoint is empty, use default endpoint
     if (baseUrl.trim().length === 0) {
-      const isApp = !!getClientConfig()?.isApp;
-
-      baseUrl = isApp ? ANTHROPIC_BASE_URL : ApiPath.Anthropic;
+      baseUrl = ApiPath.Anthropic;
     }
 
     if (!baseUrl.startsWith("http") && !baseUrl.startsWith("/api")) {
@@ -400,7 +386,7 @@ export class ClaudeApi implements LLMApi {
     baseUrl = trimEnd(baseUrl, "/");
 
     // try rebuild url, when using cloudflare ai gateway in client
-    return cloudflareAIGatewayUrl(`${baseUrl}/${path}`);
+    return `${baseUrl}/${path}`;
   }
 }
 

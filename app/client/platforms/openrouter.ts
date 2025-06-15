@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiPath, OPENROUTER_BASE_URL, OpenRouter } from "@/app/constant";
+import { ApiPath, OpenRouter } from "@/app/constant";
 import {
   useAccessStore,
   useAppConfig,
@@ -8,22 +8,18 @@ import {
   usePluginStore,
   ChatMessageTool,
 } from "@/app/store";
-import { getClientConfig } from "@/app/config/client";
 import {
   getMessageTextContent,
   isVisionModel,
   getTimeoutMSByModel,
 } from "@/app/utils";
 import { preProcessImageContent, streamWithThink } from "@/app/utils/chat";
-import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 
 import {
   ChatOptions,
   getHeaders,
   LLMApi,
   LLMModel,
-  LLMUsage,
-  SpeechOptions,
 } from "../api";
 import { fetch } from "@/app/utils/stream";
 import { RequestPayload } from "./openai";
@@ -39,8 +35,7 @@ export class OpenRouterApi implements LLMApi {
     }
 
     if (baseUrl.length === 0) {
-      const isApp = !!getClientConfig()?.isApp;
-      baseUrl = isApp ? OPENROUTER_BASE_URL : ApiPath.OpenRouter;
+      baseUrl = ApiPath.OpenRouter;
     }
 
     if (baseUrl.endsWith("/")) {
@@ -59,7 +54,7 @@ export class OpenRouterApi implements LLMApi {
     if (path.startsWith("/")) {
       path = path.substring(1);
     }
-    return cloudflareAIGatewayUrl([baseUrl, path].join("/"));
+    return [baseUrl, path].join("/");
   }
 
   async extractMessage(res: any) {
@@ -67,10 +62,6 @@ export class OpenRouterApi implements LLMApi {
       return "```\n" + JSON.stringify(res, null, 4) + "\n```";
     }
     return res.choices?.at(0)?.message?.content ?? res;
-  }
-
-  async speech(options: SpeechOptions): Promise<ArrayBuffer> {
-    throw new Error("Method not implemented.");
   }
 
   async chat(options: ChatOptions) {
@@ -237,13 +228,6 @@ export class OpenRouterApi implements LLMApi {
       console.log("[Request] failed to make a chat request", e);
       options.onError?.(e as Error);
     }
-  }
-
-  async usage() {
-    return {
-      used: 0,
-      total: 0,
-    } as LLMUsage;
   }
 
   async models(): Promise<LLMModel[]> {

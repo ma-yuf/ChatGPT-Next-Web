@@ -1,6 +1,6 @@
 "use client";
 // azure and openai, using same models. so using same LLMApi.
-import { ApiPath, DEEPSEEK_BASE_URL, DeepSeek } from "@/app/constant";
+import { ApiPath, DeepSeek } from "@/app/constant";
 import {
   useAccessStore,
   useAppConfig,
@@ -14,9 +14,7 @@ import {
   getHeaders,
   LLMApi,
   LLMModel,
-  SpeechOptions,
 } from "../api";
-import { getClientConfig } from "@/app/config/client";
 import {
   getMessageTextContent,
   getMessageTextContentWithoutThinking,
@@ -38,9 +36,7 @@ export class DeepSeekApi implements LLMApi {
     }
 
     if (baseUrl.length === 0) {
-      const isApp = !!getClientConfig()?.isApp;
-      const apiPath = ApiPath.DeepSeek;
-      baseUrl = isApp ? DEEPSEEK_BASE_URL : apiPath;
+      baseUrl = ApiPath.DeepSeek;
     }
 
     if (baseUrl.endsWith("/")) {
@@ -57,10 +53,6 @@ export class DeepSeekApi implements LLMApi {
 
   extractMessage(res: any) {
     return res.choices?.at(0)?.message?.content ?? "";
-  }
-
-  speech(options: SpeechOptions): Promise<ArrayBuffer> {
-    throw new Error("Method not implemented.");
   }
 
   async chat(options: ChatOptions) {

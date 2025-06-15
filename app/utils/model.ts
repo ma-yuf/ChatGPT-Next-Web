@@ -1,4 +1,4 @@
-import { DEFAULT_MODELS, ServiceProvider } from "../constant";
+import { DEFAULT_MODELS } from "../constant";
 import { LLMModel } from "../client/api";
 
 const CustomSeq = {
@@ -203,20 +203,6 @@ export function isModelAvailableInServer(
   return modelTable[fullName]?.available === false;
 }
 
-/**
- * Check if the model name is a GPT-4 related model
- *
- * @param modelName The name of the model to check
- * @returns True if the model is a GPT-4 related model (excluding gpt-4o-mini)
- */
-export function isGPT4Model(modelName: string): boolean {
-  return (
-    (modelName.startsWith("gpt-4") ||
-      modelName.startsWith("chatgpt-4o") ||
-      modelName.startsWith("o1")) &&
-    !modelName.startsWith("gpt-4o-mini")
-  );
-}
 
 /**
  * Checks if a model is not available on any of the specified providers in the server.
@@ -232,13 +218,6 @@ export function isModelNotavailableInServer(
   modelName: string,
   providerNames: string | string[],
 ): boolean {
-  // Check DISABLE_GPT4 environment variable
-  if (
-    process.env.DISABLE_GPT4 === "1" &&
-    isGPT4Model(modelName.toLowerCase())
-  ) {
-    return true;
-  }
 
   const modelTable = collectModelTable(DEFAULT_MODELS, customModels);
 
@@ -246,11 +225,6 @@ export function isModelNotavailableInServer(
     ? providerNames
     : [providerNames];
   for (const providerName of providerNamesArray) {
-    // if model provider is bytedance, use model config name to check if not avaliable
-    if (providerName === ServiceProvider.ByteDance) {
-      return !Object.values(modelTable).filter((v) => v.name === modelName)?.[0]
-        ?.available;
-    }
     const fullName = `${modelName}@${providerName.toLowerCase()}`;
     if (modelTable?.[fullName]?.available === true) return false;
   }

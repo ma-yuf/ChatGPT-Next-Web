@@ -1,6 +1,6 @@
 "use client";
 // azure and openai, using same models. so using same LLMApi.
-import { ApiPath, XAI_BASE_URL, XAI } from "@/app/constant";
+import { ApiPath, XAI } from "@/app/constant";
 import {
   useAccessStore,
   useAppConfig,
@@ -14,16 +14,13 @@ import {
   getHeaders,
   LLMApi,
   LLMModel,
-  SpeechOptions,
 } from "../api";
-import { getClientConfig } from "@/app/config/client";
 import { getTimeoutMSByModel } from "@/app/utils";
 import { preProcessImageContent } from "@/app/utils/chat";
 import { RequestPayload } from "./openai";
 import { fetch } from "@/app/utils/stream";
 
 export class XAIApi implements LLMApi {
-  private disableListModels = true;
 
   path(path: string): string {
     const accessStore = useAccessStore.getState();
@@ -35,9 +32,7 @@ export class XAIApi implements LLMApi {
     }
 
     if (baseUrl.length === 0) {
-      const isApp = !!getClientConfig()?.isApp;
-      const apiPath = ApiPath.XAI;
-      baseUrl = isApp ? XAI_BASE_URL : apiPath;
+      baseUrl = ApiPath.XAI;
     }
 
     if (baseUrl.endsWith("/")) {
@@ -54,10 +49,6 @@ export class XAIApi implements LLMApi {
 
   extractMessage(res: any) {
     return res.choices?.at(0)?.message?.content ?? "";
-  }
-
-  speech(options: SpeechOptions): Promise<ArrayBuffer> {
-    throw new Error("Method not implemented.");
   }
 
   async chat(options: ChatOptions) {
@@ -180,12 +171,6 @@ export class XAIApi implements LLMApi {
       console.log("[Request] failed to make a chat request", e);
       options.onError?.(e as Error);
     }
-  }
-  async usage() {
-    return {
-      used: 0,
-      total: 0,
-    };
   }
 
   async models(): Promise<LLMModel[]> {

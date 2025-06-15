@@ -1,18 +1,8 @@
-import {
-  FETCH_COMMIT_URL,
-  FETCH_TAG_URL,
-  ModelProvider,
-  StoreKey,
-} from "../constant";
+import { StoreKey } from "../constant";
 import { getClientConfig } from "../config/client";
 import { createPersistStore } from "../utils/store";
-import { clientUpdate } from "../utils";
-import ChatGptIcon from "../icons/chatgpt.png";
-import Locale from "../locales";
-import { ClientApi } from "../client/api";
 
 const ONE_MINUTE = 60 * 1000;
-const isApp = !!getClientConfig()?.isApp;
 
 function formatVersionDate(t: string) {
   const d = new Date(+t);
@@ -27,29 +17,17 @@ function formatVersionDate(t: string) {
   ].join("");
 }
 
-type VersionType = "date" | "tag";
+type VersionType = "tag";
 
 async function getVersion(type: VersionType) {
-  if (type === "date") {
-    const data = (await (await fetch(FETCH_COMMIT_URL)).json()) as {
-      commit: {
-        author: { name: string; date: string };
-      };
-      sha: string;
-    }[];
-    const remoteCommitTime = data[0].commit.author.date;
-    const remoteId = new Date(remoteCommitTime).getTime().toString();
-    return remoteId;
-  } else if (type === "tag") {
-    return "custom";
-  }
+  return "custom";
 }
 
 export const useUpdateStore = createPersistStore(
   {
     versionType: "tag" as VersionType,
     lastUpdate: 0,
-    version: "unknown",
+    version: "custom",
     remoteVersion: "custom",
     used: 0,
     subscription: 0,
@@ -58,18 +36,12 @@ export const useUpdateStore = createPersistStore(
   },
   (set, get) => ({
     formatVersion(version: string) {
-      if (get().versionType === "date") {
-        version = formatVersionDate(version);
-      }
       return version;
     },
 
     async getLatestVersion(force = false) {
       const versionType = get().versionType;
-      let version =
-        versionType === "date"
-          ? getClientConfig()?.commitDate
-          : getClientConfig()?.version;
+      let version = getClientConfig()?.version;
 
       set(() => ({ version }));
 
@@ -87,30 +59,6 @@ export const useUpdateStore = createPersistStore(
         }));
       } catch (error) {
         console.error("[Fetch Upstream Commit Id]", error);
-      }
-    },
-
-    async updateUsage(force = false) {
-      // only support openai for now
-      const overOneMinute = Date.now() - get().lastUpdateUsage >= ONE_MINUTE;
-      if (!overOneMinute && !force) return;
-
-      set(() => ({
-        lastUpdateUsage: Date.now(),
-      }));
-
-      try {
-        const api = new ClientApi(ModelProvider.GPT);
-        const usage = await api.llm.usage();
-
-        if (usage) {
-          set(() => ({
-            used: usage.used,
-            subscription: usage.total,
-          }));
-        }
-      } catch (e) {
-        console.error((e as Error).message);
       }
     },
   }),

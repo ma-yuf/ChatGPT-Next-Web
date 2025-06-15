@@ -70,13 +70,6 @@ if (mode !== "export") {
       //   destination: "https://api.openai.com/v1/:path*",
       // },
       {
-        // https://{resource_name}.openai.azure.com/openai/deployments/{deploy_name}/chat/completions
-        source:
-          "/api/proxy/azure/:resource_name/deployments/:deploy_name/:path*",
-        destination:
-          "https://:resource_name.openai.azure.com/openai/deployments/:deploy_name/:path*",
-      },
-      {
         source: "/api/proxy/google/:path*",
         destination: "https://generativelanguage.googleapis.com/:path*",
       },
@@ -91,14 +84,6 @@ if (mode !== "export") {
       {
         source: "/google-fonts/:path*",
         destination: "https://fonts.googleapis.com/:path*",
-      },
-      {
-        source: "/sharegpt",
-        destination: "https://sharegpt.com/api/conversations",
-      },
-      {
-        source: "/api/proxy/alibaba/:path*",
-        destination: "https://dashscope.aliyuncs.com/api/:path*",
       },
     ];
 

@@ -107,11 +107,12 @@ export const usePromptStore = createPersistStore(
       return userPrompts;
     },
 
-    updatePrompt(id: string, updater: (prompt: Prompt) => void) {
+  updatePrompt(id: string, updater: (prompt: Prompt) => void) {
       const prompt = get().prompts[id] ?? {
         title: "",
         content: "",
         id,
+        createdAt: Date.now(),
       };
 
       SearchService.remove(id);

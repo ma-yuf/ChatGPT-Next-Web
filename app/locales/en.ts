@@ -1,34 +1,19 @@
-import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 import { LocaleType } from "./index";
-import { SAAS_CHAT_UTM_URL } from "@/app/constant";
 // if you are adding a new translation, please use PartialLocaleType instead of LocaleType
 
-const isApp = !!getClientConfig()?.isApp;
 const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
-    Unauthorized: isApp
-      ? `😆 Oops, there's an issue. No worries:
-     \\ 1️⃣ New here? [Click to start chatting now 🚀](${SAAS_CHAT_UTM_URL})
-     \\ 2️⃣ Want to use your own OpenAI resources? [Click here](/#/settings) to change settings ⚙️`
-      : `😆 Oops, there's an issue. Let's fix it:
-     \ 1️⃣ New here? [Click to start chatting now 🚀](${SAAS_CHAT_UTM_URL})
-     \ 2️⃣ Using a private setup? [Click here](/#/auth) to enter your key 🔑
-     \ 3️⃣ Want to use your own OpenAI resources? [Click here](/#/settings) to change settings ⚙️
-     `,
+    Unauthorized: `[Click here](/#/auth) to enter your key 🔑`,
   },
   Auth: {
     Return: "Return",
     Title: "Need Access Code",
     Tips: "Please enter access code below",
-    SubTips: "Or enter your OpenAI or Google API Key",
     Input: "access code",
     Confirm: "Confirm",
     Later: "Later",
-    SaasTips: "Too Complex, Use Immediately Now",
-    TopTips:
-      "🥳 NextChat AI launch promotion: Instantly unlock the latest models like OpenAI o1, GPT-4o, Claude-3.5!",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
@@ -57,8 +42,6 @@ const en: LocaleType = {
       FullScreen: "FullScreen",
       RefreshTitle: "Refresh Title",
       RefreshToast: "Title refresh request sent",
-      Speech: "Play",
-      StopSpeech: "Stop",
     },
     Commands: {
       new: "Start a new chat",
@@ -222,50 +205,6 @@ const en: LocaleType = {
       Title: "Auto Generate Title",
       SubTitle: "Generate a suitable title based on the conversation content",
     },
-    Sync: {
-      CloudState: "Last Update",
-      NotSyncYet: "Not sync yet",
-      Success: "Sync Success",
-      Fail: "Sync Fail",
-
-      Config: {
-        Modal: {
-          Title: "Config Sync",
-          Check: "Check Connection",
-        },
-        SyncType: {
-          Title: "Sync Type",
-          SubTitle: "Choose your favorite sync service",
-        },
-        Proxy: {
-          Title: "Enable CORS Proxy",
-          SubTitle: "Enable a proxy to avoid cross-origin restrictions",
-        },
-        ProxyUrl: {
-          Title: "Proxy Endpoint",
-          SubTitle:
-            "Only applicable to the built-in CORS proxy for this project",
-        },
-
-        WebDav: {
-          Endpoint: "WebDAV Endpoint",
-          UserName: "User Name",
-          Password: "Password",
-        },
-
-        UpStash: {
-          Endpoint: "UpStash Redis REST Url",
-          UserName: "Backup Name",
-          Password: "UpStash Redis REST Token",
-        },
-      },
-
-      LocalState: "Local Data",
-      Overview: (overview: any) => {
-        return `${overview.chat} chats，${overview.message} messages，${overview.prompt} prompts，${overview.mask} masks`;
-      },
-      ImportFailed: "Failed to import from file",
-    },
     Mask: {
       Splash: {
         Title: "Mask Splash Screen",
@@ -304,24 +243,7 @@ const en: LocaleType = {
         "Will compress if uncompressed messages length exceeds the value",
     },
 
-    Usage: {
-      Title: "Account Balance",
-      SubTitle(used: any, total: any) {
-        return `Used this month $${used}, subscription $${total}`;
-      },
-      IsChecking: "Checking...",
-      Check: "Check",
-      NoAccess: "Enter API Key to check balance",
-    },
     Access: {
-      SaasStart: {
-        Title: "Use NextChat AI",
-        Label: " (Most Cost-Effective Option)",
-        SubTitle:
-          "Maintained by NextChat, zero setup needed, unlock OpenAI o1, GPT-4o," +
-          " Claude-3.5 and more",
-        ChatNow: "Start Now",
-      },
       AccessCode: {
         Title: "Access Code",
         SubTitle: "Access control Enabled",
@@ -347,23 +269,6 @@ const en: LocaleType = {
           SubTitle: "Must start with http(s):// or use /api/openai as default",
         },
       },
-      Azure: {
-        ApiKey: {
-          Title: "Azure Api Key",
-          SubTitle: "Check your api key from Azure console",
-          Placeholder: "Azure Api Key",
-        },
-
-        Endpoint: {
-          Title: "Azure Endpoint",
-          SubTitle: "Example: ",
-        },
-
-        ApiVerion: {
-          Title: "Azure Api Version",
-          SubTitle: "Check your api version from azure console",
-        },
-      },
       Anthropic: {
         ApiKey: {
           Title: "Anthropic API Key",
@@ -382,71 +287,6 @@ const en: LocaleType = {
           SubTitle: "Select and input a specific API version",
         },
       },
-      Baidu: {
-        ApiKey: {
-          Title: "Baidu API Key",
-          SubTitle: "Use a custom Baidu API Key",
-          Placeholder: "Baidu API Key",
-        },
-        SecretKey: {
-          Title: "Baidu Secret Key",
-          SubTitle: "Use a custom Baidu Secret Key",
-          Placeholder: "Baidu Secret Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "not supported, configure in .env",
-        },
-      },
-      Tencent: {
-        ApiKey: {
-          Title: "Tencent API Key",
-          SubTitle: "Use a custom Tencent API Key",
-          Placeholder: "Tencent API Key",
-        },
-        SecretKey: {
-          Title: "Tencent Secret Key",
-          SubTitle: "Use a custom Tencent Secret Key",
-          Placeholder: "Tencent Secret Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "not supported, configure in .env",
-        },
-      },
-      ByteDance: {
-        ApiKey: {
-          Title: "ByteDance API Key",
-          SubTitle: "Use a custom ByteDance API Key",
-          Placeholder: "ByteDance API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      Alibaba: {
-        ApiKey: {
-          Title: "Alibaba API Key",
-          SubTitle: "Use a custom Alibaba Cloud API Key",
-          Placeholder: "Alibaba Cloud API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      Moonshot: {
-        ApiKey: {
-          Title: "Moonshot API Key",
-          SubTitle: "Use a custom Moonshot API Key",
-          Placeholder: "Moonshot API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
       DeepSeek: {
         ApiKey: {
           Title: "DeepSeek API Key",
@@ -463,55 +303,6 @@ const en: LocaleType = {
           Title: "XAI API Key",
           SubTitle: "Use a custom XAI API Key",
           Placeholder: "XAI API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      ChatGLM: {
-        ApiKey: {
-          Title: "ChatGLM API Key",
-          SubTitle: "Use a custom ChatGLM API Key",
-          Placeholder: "ChatGLM API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      SiliconFlow: {
-        ApiKey: {
-          Title: "SiliconFlow API Key",
-          SubTitle: "Use a custom SiliconFlow API Key",
-          Placeholder: "SiliconFlow API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      Stability: {
-        ApiKey: {
-          Title: "Stability API Key",
-          SubTitle: "Use a custom Stability API Key",
-          Placeholder: "Stability API Key",
-        },
-        Endpoint: {
-          Title: "Endpoint Address",
-          SubTitle: "Example: ",
-        },
-      },
-      Iflytek: {
-        ApiKey: {
-          Title: "Iflytek API Key",
-          SubTitle: "Use a Iflytek API Key",
-          Placeholder: "Iflytek API Key",
-        },
-        ApiSecret: {
-          Title: "Iflytek API Secret",
-          SubTitle: "Use a Iflytek API Secret",
-          Placeholder: "Iflytek API Secret",
         },
         Endpoint: {
           Title: "Endpoint Address",
@@ -583,60 +374,6 @@ const en: LocaleType = {
       SubTitle:
         "A larger value decreasing the likelihood to repeat the same line",
     },
-    TTS: {
-      Enable: {
-        Title: "Enable TTS",
-        SubTitle: "Enable text-to-speech service",
-      },
-      Autoplay: {
-        Title: "Enable Autoplay",
-        SubTitle:
-          "Automatically generate speech and play, you need to enable the text-to-speech switch first",
-      },
-      Model: "Model",
-      Voice: {
-        Title: "Voice",
-        SubTitle: "The voice to use when generating the audio",
-      },
-      Speed: {
-        Title: "Speed",
-        SubTitle: "The speed of the generated audio",
-      },
-      Engine: "TTS Engine",
-    },
-    Realtime: {
-      Enable: {
-        Title: "Realtime Chat",
-        SubTitle: "Enable realtime chat feature",
-      },
-      Provider: {
-        Title: "Model Provider",
-        SubTitle: "Switch between different providers",
-      },
-      Model: {
-        Title: "Model",
-        SubTitle: "Select a model",
-      },
-      ApiKey: {
-        Title: "API Key",
-        SubTitle: "API Key",
-        Placeholder: "API Key",
-      },
-      Azure: {
-        Endpoint: {
-          Title: "Endpoint",
-          SubTitle: "Endpoint",
-        },
-        Deployment: {
-          Title: "Deployment Name",
-          SubTitle: "Deployment Name",
-        },
-      },
-      Temperature: {
-        Title: "Randomness (temperature)",
-        SubTitle: "Higher values result in more random responses",
-      },
-    },
   },
   Store: {
     DefaultTopic: "New Conversation",
@@ -668,9 +405,6 @@ const en: LocaleType = {
   },
   Discovery: {
     Name: "Discovery",
-  },
-  Mcp: {
-    Name: "MCP",
   },
   FineTuned: {
     Sysmessage: "You are an assistant that",
@@ -814,61 +548,6 @@ const en: LocaleType = {
   URLCommand: {
     Code: "Detected access code from url, confirm to apply? ",
     Settings: "Detected settings from url, confirm to apply?",
-  },
-  SdPanel: {
-    Prompt: "Prompt",
-    NegativePrompt: "Negative Prompt",
-    PleaseInput: (name: string) => `Please input ${name}`,
-    AspectRatio: "Aspect Ratio",
-    ImageStyle: "Image Style",
-    OutFormat: "Output Format",
-    AIModel: "AI Model",
-    ModelVersion: "Model Version",
-    Submit: "Submit",
-    ParamIsRequired: (name: string) => `${name} is required`,
-    Styles: {
-      D3Model: "3d-model",
-      AnalogFilm: "analog-film",
-      Anime: "anime",
-      Cinematic: "cinematic",
-      ComicBook: "comic-book",
-      DigitalArt: "digital-art",
-      Enhance: "enhance",
-      FantasyArt: "fantasy-art",
-      Isometric: "isometric",
-      LineArt: "line-art",
-      LowPoly: "low-poly",
-      ModelingCompound: "modeling-compound",
-      NeonPunk: "neon-punk",
-      Origami: "origami",
-      Photographic: "photographic",
-      PixelArt: "pixel-art",
-      TileTexture: "tile-texture",
-    },
-  },
-  Sd: {
-    SubTitle: (count: number) => `${count} images`,
-    Actions: {
-      Params: "See Params",
-      Copy: "Copy Prompt",
-      Delete: "Delete",
-      Retry: "Retry",
-      ReturnHome: "Return Home",
-      History: "History",
-    },
-    EmptyRecord: "No images yet",
-    Status: {
-      Name: "Status",
-      Success: "Success",
-      Error: "Error",
-      Wait: "Waiting",
-      Running: "Running",
-    },
-    Danger: {
-      Delete: "Confirm to delete?",
-    },
-    GenerateParams: "Generate Params",
-    Detail: "Detail",
   },
 };
 
