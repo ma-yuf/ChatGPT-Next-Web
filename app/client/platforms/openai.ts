@@ -52,10 +52,7 @@ export interface RequestPayload {
   stream?: boolean;
   model: string;
   temperature: number;
-  presence_penalty: number;
-  frequency_penalty: number;
   top_p: number;
-  max_tokens?: number;
   max_completion_tokens?: number;
 }
 
@@ -172,11 +169,7 @@ export class ChatGPTApi implements LLMApi {
         stream: options.config.stream,
         model: modelConfig.model,
         temperature: !isO1OrO3 ? modelConfig.temperature : 1,
-        presence_penalty: !isO1OrO3 ? modelConfig.presence_penalty : 0,
-        frequency_penalty: !isO1OrO3 ? modelConfig.frequency_penalty : 0,
         top_p: !isO1OrO3 ? modelConfig.top_p : 1,
-        // max_tokens: Math.max(modelConfig.max_tokens, 1024),
-        // Please do not ask me why not send max_tokens, no reason, this param is just shit, I dont want to explain anymore.
       };
 
       if (isO1OrO3) {
@@ -187,14 +180,6 @@ export class ChatGPTApi implements LLMApi {
           role: "developer",
           content: "Formatting re-enabled",
         });
-
-        // o1/o3 uses max_completion_tokens to control the number of tokens (https://platform.openai.com/docs/guides/reasoning#controlling-costs)
-        requestPayload["max_completion_tokens"] = modelConfig.max_tokens;
-      }
-
-      // add max_tokens to vision model
-      if (visionModel && !isO1OrO3) {
-        requestPayload["max_tokens"] = Math.max(modelConfig.max_tokens, 4000);
       }
     }
 

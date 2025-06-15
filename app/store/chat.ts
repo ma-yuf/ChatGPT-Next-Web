@@ -553,13 +553,12 @@ export const useChatStore = createPersistStore(
           : shortTermMemoryStartIndex;
         // and if user has cleared history messages, we should exclude the memory too.
         const contextStartIndex = Math.max(clearContextIndex, memoryStartIndex);
-        const maxTokenThreshold = modelConfig.max_tokens;
 
         // get recent messages as much as possible
         const reversedRecentMessages = [];
         for (
           let i = totalMessageCount - 1, tokenCount = 0;
-          i >= contextStartIndex && tokenCount < maxTokenThreshold;
+          i >= contextStartIndex;
           i -= 1
         ) {
           const msg = messages[i];
@@ -675,7 +674,7 @@ Examples of titles:\\n\
 
         const historyMsgLength = countMessages(toBeSummarizedMsgs);
 
-        if (historyMsgLength > (modelConfig?.max_tokens || 4000)) {
+        if (historyMsgLength > (4000)) {
           const n = toBeSummarizedMsgs.length;
           toBeSummarizedMsgs = toBeSummarizedMsgs.slice(
             Math.max(0, n - modelConfig.historyMessageCount),
@@ -700,10 +699,7 @@ Examples of titles:\\n\
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
           modelConfig.sendMemory
         ) {
-          /** Destruct max_tokens while summarizing
-           * this param is just shit
-           **/
-          const { max_tokens, ...modelcfg } = modelConfig;
+          const { ...modelcfg } = modelConfig;
           api.llm.chat({
             messages: toBeSummarizedMsgs.concat(
               createMessage({

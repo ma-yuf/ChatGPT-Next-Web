@@ -252,18 +252,6 @@ const cn = {
       Title: "top_p",
       SubTitle: "默认为 1; 另一种控制随机度的手段；越接近 1, 结果越多样, 不要和随机性一起更改",
     },
-    MaxTokens: {
-      Title: "max_tokens",
-      SubTitle: "最大返回 token 数, 上限由模型版本决定",
-    },
-    PresencePenalty: {
-      Title: "presence_penalty",
-      SubTitle: "默认为 0; 对“是否出现过”进行惩罚, 正值会减少整段中首次出现的重复",
-    },
-    FrequencyPenalty: {
-      Title: "frequency_penalty",
-      SubTitle: "默认为 0; 对“出现次数”进行惩罚, 正值可抑制重复字词",
-    },
   },
   Store: {
     DefaultTopic: "新的聊天",

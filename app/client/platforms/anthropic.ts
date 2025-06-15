@@ -42,7 +42,6 @@ export interface AnthropicChatRequest {
 export interface ChatRequest {
   model: string; // The model that will complete your prompt.
   prompt: string; // The prompt that you want Claude to complete.
-  max_tokens_to_sample: number; // The maximum number of tokens to generate before stopping.
   stop_sequences?: string[]; // Sequences that will cause the model to stop generating completion text.
   temperature?: number; // Amount of randomness injected into the response.
   top_p?: number; // Use nucleus sampling.
@@ -178,7 +177,7 @@ export class ClaudeApi implements LLMApi {
       stream: shouldStream,
 
       model: modelConfig.model,
-      max_tokens: modelConfig.max_tokens,
+      max_tokens: 4096,
       temperature: modelConfig.temperature,
       top_p: modelConfig.top_p,
       // top_k: modelConfig.top_k,

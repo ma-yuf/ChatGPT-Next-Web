@@ -88,15 +88,8 @@ export class OpenRouterApi implements LLMApi {
       stream: options.config.stream,
       model: modelConfig.model,
       temperature: modelConfig.temperature,
-      presence_penalty: modelConfig.presence_penalty,
-      frequency_penalty: modelConfig.frequency_penalty,
       top_p: modelConfig.top_p,
     };
-
-    // 添加max_tokens参数
-    if (visionModel) {
-      requestPayload["max_tokens"] = Math.max(modelConfig.max_tokens, 4000);
-    }
 
     console.log("[Request] openrouter payload: ", requestPayload);
 

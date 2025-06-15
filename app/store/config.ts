@@ -58,9 +58,6 @@ export const DEFAULT_CONFIG = {
     providerName: "OpenAI" as ServiceProvider,
     temperature: 0.7,
     top_p: 1,
-    max_tokens: 5120,
-    presence_penalty: 0,
-    frequency_penalty: 0,
     sendMemory: true,
     historyMessageCount: 10,
     compressMessageLengthThreshold: 1000,
@@ -94,15 +91,6 @@ export function limitNumber(
 export const ModalConfigValidator = {
   model(x: string) {
     return x as ModelType;
-  },
-  max_tokens(x: number) {
-    return limitNumber(x, 0, 512000, 1024);
-  },
-  presence_penalty(x: number) {
-    return limitNumber(x, -2, 2, 0);
-  },
-  frequency_penalty(x: number) {
-    return limitNumber(x, -2, 2, 0);
   },
   temperature(x: number) {
     return limitNumber(x, 0, 2, 1);
