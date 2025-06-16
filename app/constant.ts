@@ -13,6 +13,8 @@ export const XAI_BASE_URL = "https://api.x.ai";
 
 export const OPENROUTER_BASE_URL = "https://openrouter.ai/api";
 
+export const RESPONSESAPI_BASE_URL = "https://api.openai.com"
+
 export const CACHE_URL_PREFIX = "/api/cache";
 export const UPLOAD_URL = `${CACHE_URL_PREFIX}/upload`;
 
@@ -37,6 +39,7 @@ export enum ApiPath {
   DeepSeek = "/api/deepseek",
   OpenRouter = "/api/openrouter",
   Artifacts = "/api/artifacts",
+  ResponsesAPI = "/api/responsesapi"
 }
 
 export enum SlotID {
@@ -83,6 +86,7 @@ export enum ServiceProvider {
   XAI = "XAI",
   DeepSeek = "DeepSeek",
   OpenRouter = "OpenRouter",
+  ResponsesAPI = "ResponsesAPI",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
@@ -101,6 +105,7 @@ export enum ModelProvider {
   XAI = "XAI",
   DeepSeek = "DeepSeek",
   OpenRouter = "OpenRouter",
+  ResponsesAPI = "ResponsesAPI"
 }
 
 export const Anthropic = {
@@ -136,6 +141,11 @@ export const OpenRouter = {
   ExampleEndpoint: OPENROUTER_BASE_URL,
   ChatPath: "v1/chat/completions",
 };
+
+export const ResponsesAPI = {
+  ExampleEndpoint: RESPONSESAPI_BASE_URL,
+  ChatPath: "v1/responses",
+}
 
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
 // export const DEFAULT_SYSTEM_TEMPLATE = `
@@ -174,17 +184,6 @@ export const VISION_MODEL_REGEXES = [
 export const EXCLUDE_VISION_MODEL_REGEXES = [/claude-3-5-haiku-20241022/];
 
 const openaiModels = [
-  // As of July 2024, gpt-4o-mini should be used in place of gpt-3.5-turbo,
-  // as it is cheaper, more capable, multimodal, and just as fast. gpt-3.5-turbo is still available for use in the API.
-  "gpt-3.5-turbo",
-  "gpt-3.5-turbo-1106",
-  "gpt-3.5-turbo-0125",
-  "gpt-4",
-  "gpt-4-0613",
-  "gpt-4-32k",
-  "gpt-4-32k-0613",
-  "gpt-4-turbo",
-  "gpt-4-turbo-preview",
   "gpt-4.1",
   "gpt-4.1-2025-04-14",
   "gpt-4.1-mini",
@@ -207,11 +206,12 @@ const openaiModels = [
   "o1-mini",
   "o1-preview",
   "o1",
-  "o1-pro",
   "o3-mini",
   "o3",
   "o4-mini",
 ];
+
+const responsesapiModels = openaiModels;
 
 const googleModels = [
   "gemini-1.5-pro-latest",
@@ -283,6 +283,17 @@ const openrouterModels = [
 
 let seq = 1000; // 内置的模型序号生成器从1000开始
 export const DEFAULT_MODELS = [
+  ...responsesapiModels.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "responsesapi",
+      providerName: "ResponsesAPI",
+      providerType: "responsesapi",
+      sorted: 1,
+    }
+  })),
   ...openaiModels.map((name) => ({
     name,
     available: true,
@@ -291,7 +302,7 @@ export const DEFAULT_MODELS = [
       id: "openai",
       providerName: "OpenAI",
       providerType: "openai",
-      sorted: 1, // 这里是固定的，确保顺序与之前内置的版本一致
+      sorted: 2, // 这里是固定的，确保顺序与之前内置的版本一致
     },
   })),
   ...googleModels.map((name) => ({

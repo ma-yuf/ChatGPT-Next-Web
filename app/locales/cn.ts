@@ -245,12 +245,12 @@ const cn = {
       SubTitle: "用于压缩历史记录、生成对话标题的模型",
     },
     Temperature: {
-      Title: "temperature",
-      SubTitle: "值越大, 回复内容越赋有多样性、创造性、随机性; 设为 0 根据事实回答; 日常聊天建议0.7",
+      Title: "温度",
+      SubTitle: "值越大, 越赋有多样性、创造性、随机性; 日常聊天建议0.7",
     },
     TopP: {
-      Title: "top_p",
-      SubTitle: "默认为 1; 另一种控制随机度的手段；越接近 1, 结果越多样, 不要和随机性一起更改",
+      Title: "Top-P",
+      SubTitle: "默认为 1; 另一种控制随机度的手段, 不要和随机性一起更改",
     },
   },
   Store: {

@@ -25,6 +25,8 @@ const DEFAULT_XAI_URL = ApiPath.XAI;
 
 const DEFAULT_OPENROUTER_URL = ApiPath.OpenRouter;
 
+const DEFAULT_RESPONSESAPI_URL = ApiPath.ResponsesAPI;
+
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
   useCustomConfig: false,
@@ -57,6 +59,9 @@ const DEFAULT_ACCESS_STATE = {
   // openrouter
   openrouterUrl: DEFAULT_OPENROUTER_URL,
   openrouterApiKey: "",
+
+  responsesapiUrl: DEFAULT_RESPONSESAPI_URL,
+  responsesapiApiKey: "",
 
   // server config
   needCode: true,
@@ -103,6 +108,10 @@ export const useAccessStore = createPersistStore(
       return ensure(get(), ["openrouterApiKey"]);
     },
 
+    isValidResponsesAPI() {
+      return ensure(get(), ["responsesapiApiKey"]);
+    },
+
     isAuthorized() {
       this.fetch();
 
@@ -114,6 +123,7 @@ export const useAccessStore = createPersistStore(
         this.isValidDeepSeek() ||
         this.isValidXAI() ||
         this.isValidOpenRouter() ||
+        this.isValidResponsesAPI() ||
         !this.enabledAccessControl() ||
         (this.enabledAccessControl() && ensure(get(), ["accessCode"]))
       );

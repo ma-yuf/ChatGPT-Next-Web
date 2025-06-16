@@ -91,6 +91,11 @@ export class ClaudeApi implements LLMApi {
       },
     };
 
+    const modelSpec = {
+      ...useAppConfig.getState().modelSpec,
+      ...useChatStore.getState().currentSession().mask.modelSpec,
+    }
+
     // try get base64image from local cache image_url
     const messages: ChatOptions["messages"] = [];
     for (const v of options.messages) {
@@ -177,7 +182,7 @@ export class ClaudeApi implements LLMApi {
       stream: shouldStream,
 
       model: modelConfig.model,
-      max_tokens: 4096,
+      max_tokens: modelSpec.anthropic_max_tokens,
       temperature: modelConfig.temperature,
       top_p: modelConfig.top_p,
       // top_k: modelConfig.top_k,

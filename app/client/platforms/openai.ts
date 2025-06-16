@@ -53,7 +53,6 @@ export interface RequestPayload {
   model: string;
   temperature: number;
   top_p: number;
-  max_completion_tokens?: number;
 }
 
 export interface DalleRequestPayload {

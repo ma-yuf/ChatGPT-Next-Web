@@ -16,6 +16,7 @@ import { ClaudeApi } from "./platforms/anthropic";
 import { DeepSeekApi } from "./platforms/deepseek";
 import { XAIApi } from "./platforms/xai";
 import { OpenRouterApi } from "./platforms/openrouter";
+import { ResponsesAPIApi } from "./platforms/responsesapi";
 
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
@@ -104,6 +105,9 @@ export class ClientApi {
       case ModelProvider.OpenRouter:
         this.llm = new OpenRouterApi();
         break;
+      case ModelProvider.ResponsesAPI:
+        this.llm = new ResponsesAPIApi();
+        break;
       default:
         this.llm = new ChatGPTApi();
     }
@@ -148,6 +152,7 @@ export function getHeaders(ignoreHeaders: boolean = false) {
     const isAnthropic = modelConfig.providerName === ServiceProvider.Anthropic;
     const isDeepSeek = modelConfig.providerName === ServiceProvider.DeepSeek;
     const isXAI = modelConfig.providerName === ServiceProvider.XAI;
+    const isResponsesAPI = modelConfig.providerName === ServiceProvider.ResponsesAPI;
     const isEnabledAccessControl = accessStore.enabledAccessControl();
     const apiKey = isGoogle
       ? accessStore.googleApiKey
@@ -157,12 +162,15 @@ export function getHeaders(ignoreHeaders: boolean = false) {
       ? accessStore.xaiApiKey
       : isDeepSeek
       ? accessStore.deepseekApiKey
+      : isResponsesAPI
+      ? accessStore.responsesapiApiKey
       : accessStore.openaiApiKey;
     return {
       isGoogle,
       isAnthropic,
       isDeepSeek,
       isXAI,
+      isResponsesAPI,
       apiKey,
       isEnabledAccessControl,
     };
@@ -215,6 +223,8 @@ export function getClientApi(provider: ServiceProvider): ClientApi {
       return new ClientApi(ModelProvider.XAI);
     case ServiceProvider.OpenRouter:
       return new ClientApi(ModelProvider.OpenRouter);
+    case ServiceProvider.ResponsesAPI:
+      return new ClientApi(ModelProvider.ResponsesAPI);
     default:
       return new ClientApi(ModelProvider.GPT);
   }

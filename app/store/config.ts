@@ -60,20 +60,28 @@ export const DEFAULT_CONFIG = {
     top_p: 1,
     sendMemory: true,
     historyMessageCount: 10,
-    compressMessageLengthThreshold: 1000,
+    compressMessageLengthThreshold: 5000,
     compressModel: "gpt-4.1-mini" as ModelType,
-    compressProviderName: "OpenAI",
+    compressProviderName: "ResponsesAPI",
     enableInjectSystemPrompts: true,
     template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
     size: "1024x1024" as ModelSize,
     quality: "standard" as DalleQuality,
     style: "vivid" as DalleStyle,
   },
+
+  modelSpec: {
+    anthropic_max_tokens: 4096,
+    responsesapi_reasoning_effort: "high",
+    responsesapi_reasoning_summary: "detailed",
+  }
 };
 
 export type ChatConfig = typeof DEFAULT_CONFIG;
 
 export type ModelConfig = ChatConfig["modelConfig"];
+
+export type ModelSpec = ChatConfig["modelSpec"];
 
 export function limitNumber(
   x: number,
@@ -99,6 +107,24 @@ export const ModalConfigValidator = {
     return limitNumber(x, 0, 1, 1);
   },
 };
+
+export const ModelSpecValidator = {
+  anthropic_max_tokens(x: number) {
+    return limitNumber(x, 1024, 512000, 4096);
+  },
+  responsesapi_reasoning_effort(x: string) {
+    if(["low", "mid", "high"].includes(x)){
+      return x;
+    }
+    return "high";
+  },
+  responsesapi_reasoning_summary(x: string) {
+    if(["auto", "concise", "detailed"].includes(x)){
+      return x;
+    }
+    return "detailed";
+  }
+}
 
 export const useAppConfig = createPersistStore(
   { ...DEFAULT_CONFIG },

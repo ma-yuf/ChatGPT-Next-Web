@@ -54,7 +54,6 @@ export type ChatMessage = RequestMessage & {
   model?: ModelType;
   tools?: ChatMessageTool[];
   audio_url?: string;
-  isMcpResponse?: boolean;
 };
 
 export function createMessage(override: Partial<ChatMessage>): ChatMessage {
@@ -209,6 +208,9 @@ export const useChatStore = createPersistStore(
           modelConfig: {
             ...currentSession.mask.modelConfig,
           },
+          modelSpec: {
+            ...currentSession.mask.modelSpec,
+          }
         };
 
         set((state) => ({
@@ -268,6 +270,10 @@ export const useChatStore = createPersistStore(
               ...globalModelConfig,
               ...mask.modelConfig,
             },
+            modelSpec: {
+              ...config.modelSpec,
+              ...mask.modelSpec,
+            }
           };
           session.topic = mask.name;
         }
@@ -356,17 +362,14 @@ export const useChatStore = createPersistStore(
       async onUserInput(
         content: string,
         attachImages?: string[],
-        isMcpResponse?: boolean,
       ) {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
 
-        // MCP Response no need to fill template
-        let mContent: string | MultimodalContent[] = isMcpResponse
-          ? content
-          : fillTemplateWith(content, modelConfig);
+        let mContent: string | MultimodalContent[] = 
+          fillTemplateWith(content, modelConfig);
 
-        if (!isMcpResponse && attachImages && attachImages.length > 0) {
+        if (attachImages && attachImages.length > 0) {
           mContent = [
             ...(content ? [{ type: "text" as const, text: content }] : []),
             ...attachImages.map((url) => ({
@@ -379,7 +382,6 @@ export const useChatStore = createPersistStore(
         let userMessage: ChatMessage = createMessage({
           role: "user",
           content: mContent,
-          isMcpResponse,
         });
 
         const botMessage: ChatMessage = createMessage({

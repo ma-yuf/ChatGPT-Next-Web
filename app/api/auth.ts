@@ -82,6 +82,9 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
       case ModelProvider.OpenRouter:
         systemApiKey = serverConfig.openrouterApiKey;
         break;
+      case ModelProvider.ResponsesAPI:
+        systemApiKey = serverConfig.responsesapiApiKey;
+        break;
       case ModelProvider.GPT:
       default:
         systemApiKey = serverConfig.apiKey;

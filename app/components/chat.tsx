@@ -1092,6 +1092,7 @@ function ChatComponent() {
       if (session.mask.syncGlobalConfig) {
         console.log("[Mask] syncing from global, name = ", session.mask.name);
         session.mask.modelConfig = { ...config.modelConfig };
+        session.mask.modelSpec = { ...config.modelSpec };
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1609,7 +1610,6 @@ function ChatComponent() {
             >
               {messages
                 // TODO
-                // .filter((m) => !m.isMcpResponse)
                 .map((message, i) => {
                   const isUser = message.role === "user";
                   const isContext = i < context.length;

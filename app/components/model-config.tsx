@@ -1,5 +1,5 @@
 import { ServiceProvider } from "@/app/constant";
-import { ModalConfigValidator, ModelConfig } from "../store";
+import { ModalConfigValidator, ModelConfig, ModelSpec, ModelSpecValidator } from "../store";
 
 import Locale from "../locales";
 import { InputRange } from "./input-range";
@@ -11,7 +11,9 @@ import { getModelProvider } from "../utils/model";
 
 export function ModelConfigList(props: {
   modelConfig: ModelConfig;
+  modelSpec: ModelSpec;
   updateConfig: (updater: (config: ModelConfig) => void) => void;
+  updateSpec: (updater: (config: ModelSpec) => void) => void;
 }) {
   const allModels = useAllModels();
   const groupModels = groupBy(
@@ -20,6 +22,13 @@ export function ModelConfigList(props: {
   );
   const value = `${props.modelConfig.model}@${props.modelConfig?.providerName}`;
   const compressModelValue = `${props.modelConfig.compressModel}@${props.modelConfig?.compressProviderName}`;
+
+  const isAnthropic = props.modelConfig?.providerName == ServiceProvider.Anthropic;
+  const isReasoningModels = props.modelConfig?.providerName == ServiceProvider.ResponsesAPI && 
+      props.modelConfig?.model.startsWith("o");
+
+  const currentReasoningEffort = `${props.modelSpec.responsesapi_reasoning_effort}`;
+  const currentReasoningSummary = `${props.modelSpec.responsesapi_reasoning_summary}`;
 
   return (
     <>
@@ -49,7 +58,8 @@ export function ModelConfigList(props: {
           ))}
         </Select>
       </ListItem>
-      <ListItem
+
+      {!isReasoningModels && <ListItem
         title={Locale.Settings.Temperature.Title}
         subTitle={Locale.Settings.Temperature.SubTitle}
       >
@@ -68,8 +78,9 @@ export function ModelConfigList(props: {
             );
           }}
         ></InputRange>
-      </ListItem>
-      <ListItem
+      </ListItem>}
+
+      {!isReasoningModels && <ListItem
         title={Locale.Settings.TopP.Title}
         subTitle={Locale.Settings.TopP.SubTitle}
       >
@@ -88,8 +99,74 @@ export function ModelConfigList(props: {
             );
           }}
         ></InputRange>
-      </ListItem>
+      </ListItem>}
       
+      {isAnthropic && 
+      <ListItem
+        title="最大 TOKEN 数"
+        subTitle="单次交互所用的最大 Token 数"
+      >
+        <input
+          aria-label="max_tokens"
+          type="number"
+          min="1024"
+          max="512000"
+          value={props.modelSpec.anthropic_max_tokens}
+          onChange={(e) => {
+            props.updateSpec(
+              (config) =>
+                (config.anthropic_max_tokens = ModelSpecValidator.anthropic_max_tokens(
+                  e.currentTarget.valueAsNumber, 
+                )),
+            );
+          }}
+        ></input>
+      </ListItem>}
+
+      {isReasoningModels &&
+      <ListItem
+        title="思维链长度"
+        subTitle="">
+        <Select
+          aria-label="reasoning_effort"
+          value={currentReasoningEffort}
+          align="left"
+          onChange={(e) => {
+            props.updateSpec(
+              (config) =>
+                (config.responsesapi_reasoning_effort = ModelSpecValidator.responsesapi_reasoning_effort(
+                  e.currentTarget.value)))
+          }}>
+          <optgroup label="reasoning_effort">
+            <option value="low">浮想</option>
+            <option value="mid">斟酌</option>
+            <option value="high">沉思</option>
+          </optgroup>
+        </Select>
+      </ListItem>}
+
+      {isReasoningModels &&
+      <ListItem
+        title="摘要模式"
+        subTitle="">
+        <Select
+          aria-label="reasoning_summary"
+          value={currentReasoningSummary}
+          align="left"
+          onChange={(e) => {
+            props.updateSpec(
+              (config) =>
+                (config.responsesapi_reasoning_summary = ModelSpecValidator.responsesapi_reasoning_summary(
+                  e.currentTarget.value)))
+          }}>
+          <optgroup label="reasoning_summary">
+            <option value="auto">自动</option>
+            <option value="concise">简要</option>
+            <option value="detailed">详细</option>
+          </optgroup>
+        </Select>
+      </ListItem>}
+
       <ListItem
         title={Locale.Settings.HistoryCount.Title}
         subTitle={Locale.Settings.HistoryCount.SubTitle}

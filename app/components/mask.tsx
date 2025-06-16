@@ -18,6 +18,7 @@ import {
   ChatMessage,
   createMessage,
   ModelConfig,
+  ModelSpec,
   ModelType,
   useAppConfig,
   useChatStore,
@@ -89,6 +90,18 @@ export function MaskConfig(props: {
     updater(config);
     props.updateMask((mask) => {
       mask.modelConfig = config;
+      // if user changed current session mask, it will disable auto sync
+      mask.syncGlobalConfig = false;
+    });
+  };
+
+  const updateSpec = (updater: (config: ModelSpec) => void) => {
+    if (props.readonly) return;
+
+    const config = { ...props.mask.modelSpec };
+    updater(config);
+    props.updateMask((mask) => {
+      mask.modelSpec = config;
       // if user changed current session mask, it will disable auto sync
       mask.syncGlobalConfig = false;
     });
@@ -234,6 +247,7 @@ export function MaskConfig(props: {
                   props.updateMask((mask) => {
                     mask.syncGlobalConfig = checked;
                     mask.modelConfig = { ...globalConfig.modelConfig };
+                    mask.modelSpec = { ...globalConfig.modelSpec };
                   });
                 } else if (!checked) {
                   props.updateMask((mask) => {
@@ -250,6 +264,8 @@ export function MaskConfig(props: {
         <ModelConfigList
           modelConfig={{ ...props.mask.modelConfig }}
           updateConfig={updateConfig}
+          modelSpec={{ ...props.mask.modelSpec }}
+          updateSpec={updateSpec}
         />
         {props.extraListItems}
       </List>

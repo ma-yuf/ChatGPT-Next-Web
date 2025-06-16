@@ -303,6 +303,7 @@ export function getTimeoutMSByModel(model: string) {
     model.startsWith("dalle") ||
     model.startsWith("o1") ||
     model.startsWith("o3") ||
+    model.startsWith("o4") ||
     model.includes("deepseek-r") ||
     model.includes("-thinking")
   )
@@ -333,7 +334,7 @@ export function supportsCustomSize(model: string): boolean {
 }
 
 export function showPlugins(provider: ServiceProvider, model: string) {
-  if (provider == ServiceProvider.OpenAI) {
+  if (provider == ServiceProvider.OpenAI || provider == ServiceProvider.ResponsesAPI) {
     return true;
   }
   if (provider == ServiceProvider.Anthropic && !model.includes("claude-2")) {

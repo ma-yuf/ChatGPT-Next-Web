@@ -560,6 +560,12 @@ export function Settings() {
               updater(modelConfig);
               config.update((config) => (config.modelConfig = modelConfig));
             }}
+            modelSpec={config.modelSpec}
+            updateSpec={(updater) => {
+              const modelSpec = { ...config.modelSpec };
+              updater(modelSpec);
+              config.update((config) => (config.modelSpec = modelSpec));
+            }}
           />
         </List>
 

@@ -36,6 +36,10 @@ declare global {
       OPENROUTER_URL?: string;
       OPENROUTER_API_KEY?: string;
 
+      // responsesapi only
+      RESPONSESAPI_URL?: string;
+      RESPONSESAPI_API_KEY?: string;
+
       TAVILY_API_KEY?: string;
 
       // custom template for preprocessing user input
@@ -89,6 +93,7 @@ export const getServerSideConfig = () => {
   const isDeepSeek = !!process.env.DEEPSEEK_API_KEY;
   const isXAI = !!process.env.XAI_API_KEY;
   const isOpenRouter = !!process.env.OPENROUTER_API_KEY;
+  const isResponsesAPI = !!process.env.RESPONSESAPI_API_KEY;
   const isTavily = !!process.env.TAVILY_API_KEY;
   // const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
   // const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
@@ -126,6 +131,10 @@ export const getServerSideConfig = () => {
 
     isTavily,
     tavilyApiKey: getApiKey(process.env.TAVILY_API_KEY),
+
+    isResponsesAPI,
+    responsesapiUrl: process.env.RESPONSESAPI_URL,
+    responsesapiApiKey: getApiKey(process.env.RESPONSESAPI_API_KEY),
 
     needCode: ACCESS_CODES.size > 0,
     code: process.env.CODE,

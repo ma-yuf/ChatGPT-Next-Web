@@ -117,6 +117,8 @@ async function request(req: NextRequest) {
     // to disable nginx buffering
     newHeaders.set("X-Accel-Buffering", "no");
 
+    newHeaders.delete("set-cookie");
+
     return new Response(res.body, {
       status: res.status,
       statusText: res.statusText,
