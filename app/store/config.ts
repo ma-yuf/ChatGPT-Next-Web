@@ -55,12 +55,12 @@ export const DEFAULT_CONFIG = {
 
   modelConfig: {
     model: "gpt-4.1" as ModelType,
-    providerName: "OpenAI" as ServiceProvider,
+    providerName: "ResponsesAPI" as ServiceProvider,
     temperature: 0.7,
     top_p: 1,
     sendMemory: true,
     historyMessageCount: 10,
-    compressMessageLengthThreshold: 5000,
+    compressMessageLengthThreshold: 10000,
     compressModel: "gpt-4.1-mini" as ModelType,
     compressProviderName: "ResponsesAPI",
     enableInjectSystemPrompts: true,

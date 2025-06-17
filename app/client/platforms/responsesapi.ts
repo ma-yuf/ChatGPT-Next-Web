@@ -66,24 +66,24 @@ export type ChatStreamResponse = {
 async function preProcessImageContentBase(
     content: RequestMessage["content"],
 ) {
-    if (typeof content === "string") {
-        return content;
-    }
-    const result:MultiBlockContent[] = [];
-    for (const part of content) {
-        if (part?.type == "image_url" && part?.image_url?.url) {
-        try {
-            const url = await cacheImageToBase64Image(part?.image_url?.url);
-            result.push({type: "input_image", image_url: url});
-        } catch (error) {
-            console.error("Error processing image URL:", error);
-        }
-        } else {
-        result.push({type: "input_text", text: part?.text});
-        }
-    }
-    return result;
-    }
+  if (typeof content === "string") {
+      return content;
+  }
+  const result:MultiBlockContent[] = [];
+  for (const part of content) {
+      if (part?.type == "image_url" && part?.image_url?.url) {
+      try {
+          const url = await cacheImageToBase64Image(part?.image_url?.url);
+          result.push({type: "input_image", image_url: url});
+      } catch (error) {
+          console.error("Error processing image URL:", error);
+      }
+      } else {
+      result.push({type: "input_text", text: part?.text});
+      }
+  }
+  return result;
+}
 
 export class ResponsesAPIApi implements LLMApi {
 
