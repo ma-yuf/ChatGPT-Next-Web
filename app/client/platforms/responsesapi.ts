@@ -39,6 +39,7 @@ export interface ChatRequest {
   tool_choice: string;
   metadata?: object;
   stream?: boolean;
+  tools?: any;
   reasoning?: {
     effort: string;
     summary: string;
@@ -90,11 +91,20 @@ export class ResponsesAPIApi implements LLMApi {
   extractMessage(res: any) {
     console.log("[Response] responsesapi response: ", res);
 
-    return res?.output?.[0]?.content?.[0]?.text;
+    let result = res?.output?.map(item => {
+      if (item.type === "image_generation_call" && item.result) {
+        return `![${item.revised_prompt}](data:image/png;base64,${item.result})`;
+      }
+      if (item.type === "message") {
+        return item.content?.[0]?.text;
+      }
+      return "";
+    }).filter(Boolean).join('\n');
+    return result;
   }
   async chat(options: ChatOptions): Promise<void> {
 
-    const shouldStream = !!options.config.stream;
+    let shouldStream = !!options.config.stream;
 
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
@@ -109,9 +119,21 @@ export class ResponsesAPIApi implements LLMApi {
       ...useChatStore.getState().currentSession().mask.modelSpec,
     }
 
+    //remove image generated before (too big)
+    const messagesHistory = options.messages.map(m => {
+      const newMsg = { ...m };
+      if (typeof newMsg.content === 'string') {
+        newMsg.content = newMsg.content.replace(
+          /(!\[(.*?)\])\(data:image\/[a-zA-Z0-9+]+;base64,[^\)]*\)/g,
+          '$1(Image omitted due size of base64 format)'
+        );
+      }
+      return newMsg;
+    });
+
     // try get base64image from local cache image_url
     const messages: IOMessage[] = [];
-    for (const v of options.messages) {
+    for (const v of messagesHistory) {
       const content = await preProcessImageContentBase(v.content);
       messages.push({ role: v.role, content:content});
     }
@@ -146,6 +168,14 @@ export class ResponsesAPIApi implements LLMApi {
       requestBody.top_p = null;
     }
 
+    const shouldGenImage = useChatStore.getState().currentSession().mask?.plugin.includes("gpt-image");
+
+    if(shouldGenImage) {
+      requestBody.stream = false;
+      shouldStream = false;
+      requestBody.tools = [{type: "image_generation"}];
+    }
+
     const path = this.path(ResponsesAPI.ChatPath);
 
     const controller = new AbortController();
@@ -155,7 +185,8 @@ export class ResponsesAPIApi implements LLMApi {
       const [tools, funcs] = usePluginStore
         .getState()
         .getAsTools(
-          useChatStore.getState().currentSession().mask?.plugin || [],
+          useChatStore.getState().currentSession().mask?.plugin
+            .filter(item => item !== "gpt-image") || [],
         );
 
       return streamWithThink(
@@ -165,6 +196,9 @@ export class ResponsesAPIApi implements LLMApi {
           ...getHeaders(),
         },
         // @ts-ignore
+        shouldGenImage?[{
+          type: "image_generation"
+        }]:
         tools.map((tool) => ({
           type: "function",
           name: tool?.function?.name,

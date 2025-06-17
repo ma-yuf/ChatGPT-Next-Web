@@ -216,7 +216,7 @@ export const usePluginStore = createPersistStore(
       ];
     },
     get(id?: string) {
-      return get().plugins[id ?? 1145141919810];
+      return get().plugins[id];
     },
     getAll() {
       return Object.values(get().plugins).sort(
@@ -237,18 +237,24 @@ export const usePluginStore = createPersistStore(
         .then((res) => res.json())
         .then((res) => {
           Promise.all(
-            res.map((item: any) =>
-              // skip get schema
-              state.get(item.id)
-                ? item
-                : fetch(item.schema)
-                    .then((res) => res.text())
-                    .then((content) => ({
-                      ...item,
-                      content,
-                    }))
-                    .catch((e) => item),
-            ),
+            res.map((item: any) => {
+              if (state.get(item.id)) {
+                return Promise.resolve(item);
+              }
+              if (typeof item.schema === "object") {
+                return Promise.resolve({
+                  ...item,
+                  content: JSON.stringify(item.schema),
+                });
+              }
+              return fetch(item.schema)
+                .then(res => res.text())
+                .then(content => ({
+                  ...item,
+                  content,
+                }))
+                .catch();
+            })
           ).then((builtinPlugins: any) => {
             builtinPlugins
               .filter((item: any) => item?.content)

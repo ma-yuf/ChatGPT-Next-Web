@@ -620,7 +620,17 @@ export const useChatStore = createPersistStore(
         const api: ClientApi = getClientApi(providerName as ServiceProvider);
 
         // remove error messages if any
-        const messages = session.messages;
+        const messages = session.messages.map(m => {
+          const newMsg = { ...m };
+          if (typeof newMsg.content === 'string') {
+            newMsg.content = newMsg.content.replace(
+              /(!\[(.*?)\])\(data:image\/[a-zA-Z0-9+]+;base64,[^\)]*\)/g,
+              '$1(Image omitted due size of base64 format)'
+            );
+          }
+          return newMsg;
+        });
+
 
         if (
           (config.enableAutoGenerateTitle &&
